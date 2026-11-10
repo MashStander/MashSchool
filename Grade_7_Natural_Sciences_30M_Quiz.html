@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 7 Natural Sciences Quiz (30 Marks - Lower Order)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --border: #cbd5e1;
+            --correct-bg: #dcfce7;
+            --correct-border: #16a34a;
+            --correct-text: #15803d;
+            --incorrect-bg: #fee2e2;
+            --incorrect-border: #dc2626;
+            --incorrect-text: #b91c1c;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.75rem;
+        }
+
+        header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .meta-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .score-banner {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: white;
+            border: 2px solid var(--primary-light);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .topic-badge {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #ffffff;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: left;
+            transition: background 0.15s, border-color 0.15s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f1f5f9;
+            border-color: var(--primary-light);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .option-btn.selected-correct {
+            background-color: var(--correct-bg) !important;
+            border-color: var(--correct-border) !important;
+            color: var(--correct-text) !important;
+            font-weight: 600;
+        }
+
+        .option-btn.selected-incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: var(--incorrect-border) !important;
+            color: var(--incorrect-text) !important;
+            font-weight: 600;
+        }
+
+        .option-btn.show-truth {
+            border-color: var(--correct-border) !important;
+            background-color: var(--correct-bg) !important;
+            color: var(--correct-text) !important;
+        }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback-box.correct {
+            display: block;
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border: 1px solid var(--correct-border);
+        }
+
+        .feedback-box.incorrect {
+            display: block;
+            background-color: var(--incorrect-bg);
+            color: var(--incorrect-text);
+            border: 1px solid var(--incorrect-border);
+        }
+
+        .reset-btn {
+            background-color: #64748b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reset-btn:hover {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Grade 7 Natural Sciences CAPS Quiz</h1>
+        <p>Instant Feedback Online Quiz • Lower Order Assessment (30 Marks)</p>
+        <div class="meta-tags">
+            <span class="meta-tag">30 Questions</span>
+            <span class="meta-tag">1 Mark Each</span>
+            <span class="meta-tag">CAPS Aligned</span>
+        </div>
+    </header>
+
+    <div class="score-banner">
+        <span>Score: <span id="current-score">0</span> / 30 (<span id="answered-count">0</span> answered)</span>
+        <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+    </div>
+
+    <div id="quiz-body">
+
+        <div class="question-card" id="q-card-1">
+            <span class="topic-badge">Sources of Energy</span>
+            <div class="question-title">1. Which of the following is classified as a non-renewable energy source?</div>
+            <div class="options-group" id="opts-1">
+    
+                <button class="option-btn" onclick="checkAnswer(1, 'A. Wind', 'B. Uranium', this)">
+                    A. Wind
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(1, 'B. Uranium', 'B. Uranium', this)">
+                    B. Uranium
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(1, 'C. Solar', 'B. Uranium', this)">
+                    C. Solar
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(1, 'D. Hydroelectric', 'B. Uranium', this)">
+                    D. Hydroelectric
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-1"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-2">
+            <span class="topic-badge">Sources of Energy</span>
+            <div class="question-title">2. Coal, oil, and natural gas are collectively known as fossil fuels because they were formed from:</div>
+            <div class="options-group" id="opts-2">
+    
+                <button class="option-btn" onclick="checkAnswer(2, 'A. Volcanic rock and minerals', 'B. Ancient plant and animal remains buried under pressure', this)">
+                    A. Volcanic rock and minerals
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(2, 'B. Ancient plant and animal remains buried under pressure', 'B. Ancient plant and animal remains buried under pressure', this)">
+                    B. Ancient plant and animal remains buried under pressure
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(2, 'C. Solar radiation trapped in ocean water', 'B. Ancient plant and animal remains buried under pressure', this)">
+                    C. Solar radiation trapped in ocean water
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(2, 'D. Compressed air and water vapour', 'B. Ancient plant and animal remains buried under pressure', this)">
+                    D. Compressed air and water vapour
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-2"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-3">
+            <span class="topic-badge">Sources of Energy</span>
+            <div class="question-title">3. Oil and natural gas specifically formed over millions of years from the remains of:</div>
+            <div class="options-group" id="opts-3">
+    
+                <button class="option-btn" onclick="checkAnswer(3, 'A. Ancient marine organisms covered with sediment', 'A. Ancient marine organisms covered with sediment', this)">
+                    A. Ancient marine organisms covered with sediment
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(3, 'B. Inland pine trees and giant ferns', 'A. Ancient marine organisms covered with sediment', this)">
+                    B. Inland pine trees and giant ferns
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(3, 'C. Desert sand particles and clay', 'A. Ancient marine organisms covered with sediment', this)">
+                    C. Desert sand particles and clay
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(3, 'D. Volcanic ash and lava flows', 'A. Ancient marine organisms covered with sediment', this)">
+                    D. Volcanic ash and lava flows
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-3"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-4">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">4. In a burning candle system, heat transfer from the flame to the air and the melting of wax forms a:</div>
+            <div class="options-group" id="opts-4">
+    
+                <button class="option-btn" onclick="checkAnswer(4, 'A. Mechanical system', 'C. Thermal system', this)">
+                    A. Mechanical system
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(4, 'B. Hydraulic system', 'C. Thermal system', this)">
+                    B. Hydraulic system
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(4, 'C. Thermal system', 'C. Thermal system', this)">
+                    C. Thermal system
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(4, 'D. Gravitational system', 'C. Thermal system', this)">
+                    D. Gravitational system
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-4"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-5">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">5. During heat conduction between a hot object and a cold object, heat energy always moves:</div>
+            <div class="options-group" id="opts-5">
+    
+                <button class="option-btn" onclick="checkAnswer(5, 'A. From the cooler object to the warmer object', 'B. From the hotter object to the cooler object', this)">
+                    A. From the cooler object to the warmer object
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(5, 'B. From the hotter object to the cooler object', 'B. From the hotter object to the cooler object', this)">
+                    B. From the hotter object to the cooler object
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(5, 'C. Equally back and forth continuously', 'B. From the hotter object to the cooler object', this)">
+                    C. Equally back and forth continuously
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(5, 'D. Downward towards the ground only', 'B. From the hotter object to the cooler object', this)">
+                    D. Downward towards the ground only
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-5"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-6">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">6. The primary method of heat transfer through a solid copper rod is:</div>
+            <div class="options-group" id="opts-6">
+    
+                <button class="option-btn" onclick="checkAnswer(6, 'A. Conduction', 'A. Conduction', this)">
+                    A. Conduction
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(6, 'B. Convection', 'A. Conduction', this)">
+                    B. Convection
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(6, 'C. Radiation', 'A. Conduction', this)">
+                    C. Radiation
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(6, 'D. Evaporation', 'A. Conduction', this)">
+                    D. Evaporation
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-6"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-7">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">7. Why is metal considered a good conductor of heat?</div>
+            <div class="options-group" id="opts-7">
+    
+                <button class="option-btn" onclick="checkAnswer(7, 'A. Its particles are spread far apart', 'B. Its particles are closely packed, allowing rapid heat transfer', this)">
+                    A. Its particles are spread far apart
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(7, 'B. Its particles are closely packed, allowing rapid heat transfer', 'B. Its particles are closely packed, allowing rapid heat transfer', this)">
+                    B. Its particles are closely packed, allowing rapid heat transfer
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(7, 'C. It contains trapped air pockets', 'B. Its particles are closely packed, allowing rapid heat transfer', this)">
+                    C. It contains trapped air pockets
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(7, 'D. It reflects solar radiation completely', 'B. Its particles are closely packed, allowing rapid heat transfer', this)">
+                    D. It reflects solar radiation completely
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-7"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-8">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">8. Why is the heating element placed at the bottom of an electric kettle?</div>
+            <div class="options-group" id="opts-8">
+    
+                <button class="option-btn" onclick="checkAnswer(8, 'A. Hot water sinks to the bottom', 'B. Heated water expands, becomes less dense, and rises', this)">
+                    A. Hot water sinks to the bottom
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(8, 'B. Heated water expands, becomes less dense, and rises', 'B. Heated water expands, becomes less dense, and rises', this)">
+                    B. Heated water expands, becomes less dense, and rises
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(8, 'C. Cold water rises to the top automatically', 'B. Heated water expands, becomes less dense, and rises', this)">
+                    C. Cold water rises to the top automatically
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(8, 'D. Radiation only travels upward', 'B. Heated water expands, becomes less dense, and rises', this)">
+                    D. Radiation only travels upward
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-8"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-9">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">9. What type of heat transfer occurs in liquids and gases due to temperature differences?</div>
+            <div class="options-group" id="opts-9">
+    
+                <button class="option-btn" onclick="checkAnswer(9, 'A. Conduction', 'B. Convection current', this)">
+                    A. Conduction
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(9, 'B. Convection current', 'B. Convection current', this)">
+                    B. Convection current
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(9, 'C. Radiation', 'B. Convection current', this)">
+                    C. Radiation
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(9, 'D. Insulation', 'B. Convection current', this)">
+                    D. Insulation
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-9"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-10">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">10. Solar water heaters absorb radiant heat energy from the Sun by:</div>
+            <div class="options-group" id="opts-10">
+    
+                <button class="option-btn" onclick="checkAnswer(10, 'A. Conduction', 'C. Radiation', this)">
+                    A. Conduction
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(10, 'B. Convection', 'C. Radiation', this)">
+                    B. Convection
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(10, 'C. Radiation', 'C. Radiation', this)">
+                    C. Radiation
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(10, 'D. Friction', 'C. Radiation', this)">
+                    D. Friction
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-10"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-11">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">11. Which surface finish is the BEST absorber of radiant heat radiation?</div>
+            <div class="options-group" id="opts-11">
+    
+                <button class="option-btn" onclick="checkAnswer(11, 'A. Shiny white', 'C. Matt black', this)">
+                    A. Shiny white
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(11, 'B. Polished silver', 'C. Matt black', this)">
+                    B. Polished silver
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(11, 'C. Matt black', 'C. Matt black', this)">
+                    C. Matt black
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(11, 'D. Bright yellow', 'C. Matt black', this)">
+                    D. Bright yellow
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-11"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-12">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">12. When radiant heat strikes a light, shiny roof and bounces back into the atmosphere, the process is called:</div>
+            <div class="options-group" id="opts-12">
+    
+                <button class="option-btn" onclick="checkAnswer(12, 'A. Absorption', 'B. Reflection', this)">
+                    A. Absorption
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(12, 'B. Reflection', 'B. Reflection', this)">
+                    B. Reflection
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(12, 'C. Conduction', 'B. Reflection', this)">
+                    C. Conduction
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(12, 'D. Insulation', 'B. Reflection', this)">
+                    D. Insulation
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-12"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-13">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">13. Trapped air inside puffer jackets acts as a good thermal insulator because air is a:</div>
+            <div class="options-group" id="opts-13">
+    
+                <button class="option-btn" onclick="checkAnswer(13, 'A. Good conductor of heat', 'B. Poor conductor (good insulator) of heat', this)">
+                    A. Good conductor of heat
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(13, 'B. Poor conductor (good insulator) of heat', 'B. Poor conductor (good insulator) of heat', this)">
+                    B. Poor conductor (good insulator) of heat
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(13, 'C. Direct source of radiation', 'B. Poor conductor (good insulator) of heat', this)">
+                    C. Direct source of radiation
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(13, 'D. Heavy fluid medium', 'B. Poor conductor (good insulator) of heat', this)">
+                    D. Heavy fluid medium
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-13"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-14">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">14. What green pigment do plants use to absorb solar light energy for photosynthesis?</div>
+            <div class="options-group" id="opts-14">
+    
+                <button class="option-btn" onclick="checkAnswer(14, 'A. Oxygen', 'B. Chlorophyll', this)">
+                    A. Oxygen
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(14, 'B. Chlorophyll', 'B. Chlorophyll', this)">
+                    B. Chlorophyll
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(14, 'C. Carbon dioxide', 'B. Chlorophyll', this)">
+                    C. Carbon dioxide
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(14, 'D. Glucose', 'B. Chlorophyll', this)">
+                    D. Glucose
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-14"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-15">
+            <span class="topic-badge">Heat Transfer</span>
+            <div class="question-title">15. Which gas is absorbed from the air by plants to carry out photosynthesis?</div>
+            <div class="options-group" id="opts-15">
+    
+                <button class="option-btn" onclick="checkAnswer(15, 'A. Oxygen', 'C. Carbon dioxide (CO₂)', this)">
+                    A. Oxygen
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(15, 'B. Nitrogen', 'C. Carbon dioxide (CO₂)', this)">
+                    B. Nitrogen
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(15, 'C. Carbon dioxide (CO₂)', 'C. Carbon dioxide (CO₂)', this)">
+                    C. Carbon dioxide (CO₂)
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(15, 'D. Hydrogen', 'C. Carbon dioxide (CO₂)', this)">
+                    D. Hydrogen
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-15"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-16">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">16. A bicycle is classified as a mechanical system because it is designed to:</div>
+            <div class="options-group" id="opts-16">
+    
+                <button class="option-btn" onclick="checkAnswer(16, 'A. Store heat energy in its frame', 'B. Manage power and movement using connected parts', this)">
+                    A. Store heat energy in its frame
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(16, 'B. Manage power and movement using connected parts', 'B. Manage power and movement using connected parts', this)">
+                    B. Manage power and movement using connected parts
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(16, 'C. Generate solar electricity directly', 'B. Manage power and movement using connected parts', this)">
+                    C. Generate solar electricity directly
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(16, 'D. Eliminate wasted energy entirely', 'B. Manage power and movement using connected parts', this)">
+                    D. Eliminate wasted energy entirely
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-16"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-17">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">17. When energy changes from one form to another, unrecoverable energy released to surroundings is called:</div>
+            <div class="options-group" id="opts-17">
+    
+                <button class="option-btn" onclick="checkAnswer(17, 'A. Input energy', 'C. Wasted energy', this)">
+                    A. Input energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(17, 'B. Useful energy', 'C. Wasted energy', this)">
+                    B. Useful energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(17, 'C. Wasted energy', 'C. Wasted energy', this)">
+                    C. Wasted energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(17, 'D. Potential energy', 'C. Wasted energy', this)">
+                    D. Potential energy
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-17"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-18">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">18. A pen held stationary 1 metre above the ground possesses:</div>
+            <div class="options-group" id="opts-18">
+    
+                <button class="option-btn" onclick="checkAnswer(18, 'A. Kinetic energy', 'B. Gravitational potential energy', this)">
+                    A. Kinetic energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(18, 'B. Gravitational potential energy', 'B. Gravitational potential energy', this)">
+                    B. Gravitational potential energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(18, 'C. Electrical energy', 'B. Gravitational potential energy', this)">
+                    C. Electrical energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(18, 'D. Sound energy', 'B. Gravitational potential energy', this)">
+                    D. Sound energy
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-18"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-19">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">19. If a learner lifts the pen from 1 metre to 2 metres high, the pen's potential energy will:</div>
+            <div class="options-group" id="opts-19">
+    
+                <button class="option-btn" onclick="checkAnswer(19, 'A. Decrease', 'B. Increase', this)">
+                    A. Decrease
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(19, 'B. Increase', 'B. Increase', this)">
+                    B. Increase
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(19, 'C. Stay exactly the same', 'B. Increase', this)">
+                    C. Stay exactly the same
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(19, 'D. Turn into light energy', 'B. Increase', this)">
+                    D. Turn into light energy
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-19"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-20">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">20. When the pen is released and falls toward the floor, its energy transforms as follows:</div>
+            <div class="options-group" id="opts-20">
+    
+                <button class="option-btn" onclick="checkAnswer(20, 'A. Kinetic energy increases, potential energy decreases', 'A. Kinetic energy increases, potential energy decreases', this)">
+                    A. Kinetic energy increases, potential energy decreases
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(20, 'B. Potential energy increases, kinetic energy decreases', 'A. Kinetic energy increases, potential energy decreases', this)">
+                    B. Potential energy increases, kinetic energy decreases
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(20, 'C. Heat energy turns into potential energy', 'A. Kinetic energy increases, potential energy decreases', this)">
+                    C. Heat energy turns into potential energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(20, 'D. Chemical energy turns into light energy', 'A. Kinetic energy increases, potential energy decreases', this)">
+                    D. Chemical energy turns into light energy
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-20"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-21">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">21. What energy conversion occurs when a solar panel powers an electric cooling fan?</div>
+            <div class="options-group" id="opts-21">
+    
+                <button class="option-btn" onclick="checkAnswer(21, 'A. Kinetic energy -> Electrical energy', 'B. Solar/Light energy -> Electrical energy -> Kinetic energy', this)">
+                    A. Kinetic energy -> Electrical energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(21, 'B. Solar/Light energy -> Electrical energy -> Kinetic energy', 'B. Solar/Light energy -> Electrical energy -> Kinetic energy', this)">
+                    B. Solar/Light energy -> Electrical energy -> Kinetic energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(21, 'C. Electrical energy -> Potential energy', 'B. Solar/Light energy -> Electrical energy -> Kinetic energy', this)">
+                    C. Electrical energy -> Potential energy
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(21, 'D. Chemical energy -> Heat energy', 'B. Solar/Light energy -> Electrical energy -> Kinetic energy', this)">
+                    D. Chemical energy -> Heat energy
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-21"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-22">
+            <span class="topic-badge">Energy Systems and Conservation</span>
+            <div class="question-title">22. If a device receives 100 J of input energy and delivers 80 J of useful output energy, its efficiency is:</div>
+            <div class="options-group" id="opts-22">
+    
+                <button class="option-btn" onclick="checkAnswer(22, 'A. 20%', 'C. 80%', this)">
+                    A. 20%
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(22, 'B. 50%', 'C. 80%', this)">
+                    B. 50%
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(22, 'C. 80%', 'C. 80%', this)">
+                    C. 80%
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(22, 'D. 100%', 'C. 80%', this)">
+                    D. 100%
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-22"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-23">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">23. What force keeps the Earth in orbit around the Sun?</div>
+            <div class="options-group" id="opts-23">
+    
+                <button class="option-btn" onclick="checkAnswer(23, 'A. Earth's magnetic force', 'B. The Sun's gravitational pull', this)">
+                    A. Earth's magnetic force
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(23, 'B. The Sun's gravitational pull', 'B. The Sun's gravitational pull', this)">
+                    B. The Sun's gravitational pull
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(23, 'C. Ocean tide currents', 'B. The Sun's gravitational pull', this)">
+                    C. Ocean tide currents
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(23, 'D. Atmospheric pressure', 'B. The Sun's gravitational pull', this)">
+                    D. Atmospheric pressure
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-23"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-24">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">24. If Earth's axis was completely vertical (0° tilt), how would solar energy be distributed worldwide?</div>
+            <div class="options-group" id="opts-24">
+    
+                <button class="option-btn" onclick="checkAnswer(24, 'A. Equal amounts of solar energy in both hemispheres all year round', 'A. Equal amounts of solar energy in both hemispheres all year round', this)">
+                    A. Equal amounts of solar energy in both hemispheres all year round
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(24, 'B. Extreme summer heat at both poles', 'A. Equal amounts of solar energy in both hemispheres all year round', this)">
+                    B. Extreme summer heat at both poles
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(24, 'C. The Southern Hemisphere would be in permanent darkness', 'A. Equal amounts of solar energy in both hemispheres all year round', this)">
+                    C. The Southern Hemisphere would be in permanent darkness
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(24, 'D. Tides would stop completely', 'A. Equal amounts of solar energy in both hemispheres all year round', this)">
+                    D. Tides would stop completely
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-24"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-25">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">25. Why does the Moon have a stronger effect on Earth's tides than the Sun?</div>
+            <div class="options-group" id="opts-25">
+    
+                <button class="option-btn" onclick="checkAnswer(25, 'A. The Moon is larger than the Sun', 'B. The Moon is much closer to the Earth than the Sun', this)">
+                    A. The Moon is larger than the Sun
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(25, 'B. The Moon is much closer to the Earth than the Sun', 'B. The Moon is much closer to the Earth than the Sun', this)">
+                    B. The Moon is much closer to the Earth than the Sun
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(25, 'C. The Moon is made of liquid water', 'B. The Moon is much closer to the Earth than the Sun', this)">
+                    C. The Moon is made of liquid water
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(25, 'D. The Moon reflects direct light', 'B. The Moon is much closer to the Earth than the Sun', this)">
+                    D. The Moon reflects direct light
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-25"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-26">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">26. What astronomical term describes the time when day and night have an equal number of hours everywhere on Earth?</div>
+            <div class="options-group" id="opts-26">
+    
+                <button class="option-btn" onclick="checkAnswer(26, 'A. Summer solstice', 'C. Equinox', this)">
+                    A. Summer solstice
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(26, 'B. Winter solstice', 'C. Equinox', this)">
+                    B. Winter solstice
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(26, 'C. Equinox', 'C. Equinox', this)">
+                    C. Equinox
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(26, 'D. Lunar eclipse', 'C. Equinox', this)">
+                    D. Lunar eclipse
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-26"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-27">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">27. Earth's only natural satellite is the:</div>
+            <div class="options-group" id="opts-27">
+    
+                <button class="option-btn" onclick="checkAnswer(27, 'A. Sun', 'B. Moon', this)">
+                    A. Sun
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(27, 'B. Moon', 'B. Moon', this)">
+                    B. Moon
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(27, 'C. Mars', 'B. Moon', this)">
+                    C. Mars
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(27, 'D. Venus', 'B. Moon', this)">
+                    D. Venus
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-27"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-28">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">28. Sunlight striking Earth over a small area with high intensity is described as:</div>
+            <div class="options-group" id="opts-28">
+    
+                <button class="option-btn" onclick="checkAnswer(28, 'A. Oblique rays', 'B. Direct rays', this)">
+                    A. Oblique rays
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(28, 'B. Direct rays', 'B. Direct rays', this)">
+                    B. Direct rays
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(28, 'C. Refracted rays', 'B. Direct rays', this)">
+                    C. Refracted rays
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(28, 'D. Scattered rays', 'B. Direct rays', this)">
+                    D. Scattered rays
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-28"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-29">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">29. At what angle is Earth's rotational axis tilted?</div>
+            <div class="options-group" id="opts-29">
+    
+                <button class="option-btn" onclick="checkAnswer(29, 'A. 0°', 'C. 23.5°', this)">
+                    A. 0°
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(29, 'B. 15°', 'C. 23.5°', this)">
+                    B. 15°
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(29, 'C. 23.5°', 'C. 23.5°', this)">
+                    C. 23.5°
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(29, 'D. 45°', 'C. 23.5°', this)">
+                    D. 45°
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-29"></div>
+        </div>
+    
+        <div class="question-card" id="q-card-30">
+            <span class="topic-badge">The Earth and Beyond</span>
+            <div class="question-title">30. On which line of latitude do day and night have equal hours (12 hours each) every day of the year?</div>
+            <div class="options-group" id="opts-30">
+    
+                <button class="option-btn" onclick="checkAnswer(30, 'A. Tropic of Capricorn', 'B. Equator (0°)', this)">
+                    A. Tropic of Capricorn
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(30, 'B. Equator (0°)', 'B. Equator (0°)', this)">
+                    B. Equator (0°)
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(30, 'C. Arctic Circle', 'B. Equator (0°)', this)">
+                    C. Arctic Circle
+                </button>
+        
+                <button class="option-btn" onclick="checkAnswer(30, 'D. Tropic of Cancer', 'B. Equator (0°)', this)">
+                    D. Tropic of Cancer
+                </button>
+        
+            </div>
+            <div class="feedback-box" id="feedback-30"></div>
+        </div>
+    
+    </div>
+</div>
+
+<script>
+    let score = 0;
+    let answered = 0;
+    let answeredQuestions = {};
+
+    function checkAnswer(qId, selectedOption, correctAnswer, btnElement) {
+        if (answeredQuestions[qId]) return; // prevent re-answering
+        
+        answeredQuestions[qId] = true;
+        answered++;
+        
+        let container = document.getElementById('opts-' + qId);
+        let buttons = container.querySelectorAll('.option-btn');
+        let feedback = document.getElementById('feedback-' + qId);
+        
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            let text = btn.innerText.trim();
+            if (text === correctAnswer) {
+                btn.classList.add('show-truth');
+            }
+        });
+
+        if (selectedOption === correctAnswer) {
+            score++;
+            btnElement.classList.add('selected-correct');
+            feedback.className = 'feedback-box correct';
+            feedback.innerHTML = '✓ Correct!';
+        } else {
+            btnElement.classList.add('selected-incorrect');
+            feedback.className = 'feedback-box incorrect';
+            feedback.innerHTML = '✗ Incorrect. Correct answer: ' + correctAnswer;
+        }
+
+        document.getElementById('current-score').innerText = score;
+        document.getElementById('answered-count').innerText = answered;
+    }
+
+    function resetQuiz() {
+        location.reload();
+    }
+</script>
+
+</body>
+</html>
